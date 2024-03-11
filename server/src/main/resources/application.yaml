@@ -1,0 +1,4 @@
+jwt:
+  secret: my_secret_key
+  expiration:
+    seconds: 60
