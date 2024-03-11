@@ -7,10 +7,13 @@
 # You can add other services your application may depend on here, such as a
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
+version: '3'
 services:
   server:
     build:
       context: ./server
+    depends_on:
+      - mysql_container
     ports:
       - 8080:8080
   client:
@@ -18,11 +21,11 @@ services:
       context: ./client
     ports:
       - 3000:3000
-  mysql:
+  mysql_container:
     image: mysql:latest
     restart: always
     ports:
-      - '3307:3306'
+      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: demo

@@ -2,3 +2,12 @@ jwt:
   secret: my_secret_key
   expiration:
     seconds: 60
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://mysql_container:3306/demo
+    username: kelvin
+    password: password
+    driver-class: com.mysql.cj.jdbc.Driver
