@@ -65,6 +65,11 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <h1>Group 2 Deployment Demo</h1>
+      <div className={styles.tips}>
+        <div>{'1. Register -> Login -> Access API with JWT'}</div>
+        <div>2. JWT expires in 60 seconds.</div>
+      </div>
       <h1>Register</h1>
       <div className={styles.form}>
         <div className={styles.inputLine}>

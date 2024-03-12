@@ -24,3 +24,11 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.tips {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #888;
+  gap: 5px;
+}
