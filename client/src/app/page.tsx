@@ -1,94 +1,114 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { ChangeEvent, useState } from 'react';
+import styles from './page.module.css';
+
+interface RegisterInfo {
+  userName: string;
+  email: string;
+  password: string;
+}
+
+interface LoginInfo {
+  userName: string;
+  password: string;
+}
 
 export default function Home() {
+  const [registerInfo, setRegisterInfo] = useState<RegisterInfo>({
+    userName: '',
+    email: '',
+    password: '',
+  });
+
+  const [loginInfo, setLoginInfo] = useState<LoginInfo>({
+    userName: '',
+    password: '',
+  });
+
+  const [jwt, setJwt] = useState('');
+
+  const updateRegisterInfo = (e: ChangeEvent<HTMLInputElement>) => {
+    setRegisterInfo((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const updateLoginInfo = (e: ChangeEvent<HTMLInputElement>) => {
+    setLoginInfo((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleRegister = () => {};
+
+  const handleLogin = () => {};
+
+  const handleFetch = () => {};
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <h1>Register</h1>
+      <div className={styles.form}>
+        <div className={styles.inputLine}>
+          <div>User Name: </div>
+          <InputText
+            className='p-inputtext-sm'
+            name='userName'
+            onChange={updateRegisterInfo}
+          />
         </div>
+        <div className={styles.inputLine}>
+          <div>E-mail: </div>
+          <InputText
+            className='p-inputtext-sm'
+            name='email'
+            onChange={updateRegisterInfo}
+          />
+        </div>
+        <div className={styles.inputLine}>
+          <div>Password: </div>
+          <InputText
+            className='p-inputtext-sm'
+            type='password'
+            name='password'
+            onChange={updateRegisterInfo}
+          />
+        </div>
+        <Button label='Submit' outlined size='small' onClick={handleRegister} />
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <h1>Login</h1>
+      <div className={styles.form}>
+        <div className={styles.inputLine}>
+          <div>User Name: </div>
+          <InputText
+            className='p-inputtext-sm'
+            name='userName'
+            onChange={updateLoginInfo}
+          />
+        </div>
+        <div className={styles.inputLine}>
+          <div>Password: </div>
+          <InputText
+            className='p-inputtext-sm'
+            type='password'
+            name='password'
+            onChange={updateLoginInfo}
+          />
+        </div>
+        <Button label='Login' outlined size='small' onClick={handleLogin} />
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <h1>Get All Users</h1>
+      <div className={styles.form}>
+        <div className={styles.inputLine}>
+          <div>JSON Web Token: </div>
+          <InputText
+            className='p-inputtext-sm'
+            onChange={(e) => setJwt(e.target.value)}
+          />
+        </div>
+        <Button label='Fetch' outlined size='small' onClick={handleFetch} />
       </div>
     </main>
   );
