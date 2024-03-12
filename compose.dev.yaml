@@ -1,0 +1,23 @@
+version: '3'
+services:
+  server:
+    build:
+      context: ./server
+    depends_on:
+      - mysql_container
+    ports:
+      - 8080:8080
+  mysql_container:
+    image: mysql:latest
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: demo
+      MYSQL_USER: kelvin
+      MYSQL_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:
