@@ -1,19 +1,12 @@
 'use client';
+import { login, register } from '@/api/AuthService';
+import { getAllUsers } from '@/api/UserService';
+import { noEmptyFileds } from '@/utils/Validator';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
 import { ChangeEvent, useState } from 'react';
 import styles from './page.module.css';
-
-interface RegisterInfo {
-  userName: string;
-  email: string;
-  password: string;
-}
-
-interface LoginInfo {
-  userName: string;
-  password: string;
-}
 
 export default function Home() {
   const [registerInfo, setRegisterInfo] = useState<RegisterInfo>({
@@ -26,8 +19,10 @@ export default function Home() {
     userName: '',
     password: '',
   });
-
   const [jwt, setJwt] = useState('');
+  const [registerResult, setRegisterResult] = useState('No Response');
+  const [loginResult, setLoginResult] = useState('No Response');
+  const [allUsers, setAllUsers] = useState('No Response');
 
   const updateRegisterInfo = (e: ChangeEvent<HTMLInputElement>) => {
     setRegisterInfo((prev) => {
@@ -41,11 +36,32 @@ export default function Home() {
     });
   };
 
-  const handleRegister = () => {};
+  const handleRegister = async () => {
+    if (!noEmptyFileds(registerInfo)) {
+      setRegisterResult('All Fields Must Have a Value');
+      return;
+    }
+    const result = await register(registerInfo);
+    setRegisterResult(result);
+  };
 
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    if (!noEmptyFileds(loginInfo)) {
+      setLoginResult('All Fields Must Have a Value');
+      return;
+    }
+    const result = await login(loginInfo);
+    setLoginResult(result);
+  };
 
-  const handleFetch = () => {};
+  const handleFetch = async () => {
+    if (jwt == '') {
+      setAllUsers('All Fields Must Have a Value');
+      return;
+    }
+    const result = await getAllUsers(jwt);
+    setAllUsers(result);
+  };
 
   return (
     <main className={styles.main}>
@@ -77,6 +93,7 @@ export default function Home() {
           />
         </div>
         <Button label='Submit' outlined size='small' onClick={handleRegister} />
+        <InputTextarea value={registerResult} cols={60} rows={5} />
       </div>
       <h1>Login</h1>
       <div className={styles.form}>
@@ -98,6 +115,7 @@ export default function Home() {
           />
         </div>
         <Button label='Login' outlined size='small' onClick={handleLogin} />
+        <InputTextarea value={loginResult} cols={60} rows={5} />
       </div>
       <h1>Get All Users</h1>
       <div className={styles.form}>
@@ -109,6 +127,7 @@ export default function Home() {
           />
         </div>
         <Button label='Fetch' outlined size='small' onClick={handleFetch} />
+        <InputTextarea value={allUsers} cols={60} rows={5} />
       </div>
     </main>
   );
